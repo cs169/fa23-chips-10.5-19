@@ -28,10 +28,34 @@ RSpec.describe EventsController, type: :controller do
         end
     end
 
+    # create_table "states", force: :cascade do |t|
+    #     t.string "name", null: false
+    #     t.string "symbol", null: false
+    #     t.integer "fips_code", limit: 1, null: false
+    #     t.integer "is_territory", null: false
+    #     t.float "lat_min", null: false
+    #     t.float "lat_max", null: false
+    #     t.float "long_min", null: false
+    #     t.float "long_max", null: false
+    #     t.datetime "created_at", null: false
+    #     t.datetime "updated_at", null: false
+    # #   end
+    # create_table "counties", force: :cascade do |t|
+    #     t.string "name", null: false
+    #     t.integer "state_id", null: false
+    #     t.integer "fips_code", limit: 2, null: false
+    #     t.string "fips_class", limit: 2, null: false
+    #     t.datetime "created_at", null: false
+    #     t.datetime "updated_at", null: false
+    #     t.index ["state_id"], name: "index_counties_on_state_id"
+    #   end
+    
+    
     describe '#filter_events' do
         before do
-            @state = State.create(symbol: 'test_state')
-            @county = County.create(state_id: @state.id, fips_code: 'test_county')
+            dummyDate = DateTime.new(2001,2,3,4,5,6)
+            @state = State.create(symbol: 'test_state', symbol: 'test_state', fips_code: 'test_state', is_territory: 'test_state', lat_min: 'test_state', lat_max: 'test_state', long_min: 'test_state', long_max: 'test_state' )
+            @county = County.create(state_id: @state.id, name: 'test_county', fips_code: 'test_county', fips_class: 'test_county', created_at: dummyDate, updated_at: dummyDate)
         end
 
         context 'when filter-by param is "state-only"' do
