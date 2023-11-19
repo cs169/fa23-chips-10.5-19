@@ -20,7 +20,7 @@ RSpec.describe Event, type: :model do
     
     describe '#county_names_by_id' do
         it 'should return a hash of county names by id' do
-            state = State.create(name: 'State')
+            state = State.create(name: 'State', symbol: 'ST')
             county1 = County.create(state: state, name: 'County 1')
             county2 = County.create(state: state, name: 'County 2')
             event = Event.create(county: county1)
