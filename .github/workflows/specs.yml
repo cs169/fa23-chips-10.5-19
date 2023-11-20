@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-18.04
+          - ubuntu-22.04
     steps:
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
