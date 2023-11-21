@@ -25,7 +25,6 @@ describe Representative do
 
       expect(described_class).to have_received(:create!).exactly(0).times
       expect(reps).to eq([@existing_rep])
-
     end
   end
 end
