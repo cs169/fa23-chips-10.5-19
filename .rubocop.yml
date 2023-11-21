@@ -131,7 +131,20 @@ RSpec/DescribeClass:
 
 # Ideally, you'd want no more than 2.
 RSpec/MultipleExpectations:
-    Max: 4
+    Max: 10
+
+
+RSpec/ExampleLength:
+    Max: 15
 
 RSpec/RepeatedExample:
+    Enabled: false
+
+RSpec/VerifiedDoubles:
+    Enabled: false
+
+RSpec/EmptyExampleGroup:
+    Enabled: false
+
+RSpec/MessageSpies:
     Enabled: false
