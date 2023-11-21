@@ -40,7 +40,7 @@ class Representative < ApplicationRecord
         city: city_temp,
         state: state_temp,
         zip: zip_temp,
-        party: political_party_temp,
+        political_party: political_party_temp,
         photo: photo_temp})
       reps.push(rep)
     end
