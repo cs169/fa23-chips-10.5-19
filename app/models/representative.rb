@@ -5,7 +5,6 @@ class Representative < ApplicationRecord
 
   def self.civic_api_to_representative_params(rep_info)
     reps = []
-
     rep_info.officials.each_with_index do |official, index|
       ocdid_temp = ''
       title_temp = ''
@@ -33,7 +32,7 @@ class Representative < ApplicationRecord
         end
       end
 
-      rep = Representative.create!({ name: official.name, 
+      rep = { name: official.name, 
         ocdid: ocdid_temp,
         title: title_temp,
         street: street_temp,
@@ -41,10 +40,20 @@ class Representative < ApplicationRecord
         state: state_temp,
         zip: zip_temp,
         political_party: political_party_temp,
-        photo: photo_temp})
-      reps.push(rep)
-    end
+        photo: photo_temp}
 
+      #may need to search by more attributes
+      existing_rep = Representative.find_or_initialize_by(
+        name:  official.name,
+        ocdid: ocdid_temp,
+        title: title_temp
+      )
+      unless existing_rep.persisted?
+        existing_rep.attributes = rep
+        existing_rep.save!
+      end
+      reps.push(existing_rep)
+    end
     reps
   end
 end
