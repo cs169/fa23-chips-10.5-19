@@ -1,0 +1,8 @@
+<%# app/views/representatives/show.html.erb %>
+<h1><%= @representative.name %></h1>
+<img src="<%= @representative.photo_url %>" alt="<%= @representative.name %>">
+<p>Party: <%= @representative.party %></p>
+<p>Title: <%= @representative.title %></p>
+<p>Address: <%= [@representative.street, @representative.city, @representative.state, @representative.zip].compact.join(', ') %></p>
+
+<%# Add link to news items, etc. %>
