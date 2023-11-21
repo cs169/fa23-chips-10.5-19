@@ -135,7 +135,7 @@ RSpec/MultipleExpectations:
 
 
 RSpec/ExampleLength:
-    Max: 15
+    Max: 50
 
 RSpec/RepeatedExample:
     Enabled: false
