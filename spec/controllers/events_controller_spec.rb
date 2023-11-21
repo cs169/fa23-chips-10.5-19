@@ -62,8 +62,8 @@ RSpec.describe EventsController, type: :controller do
 
   #     context 'when filter-by param is "state-only"' do
   #         it 'calls Event.where with the correct arguments' do
-  #             allow(controller).to receive(:params).and_return({ 'filter-by' 
-#   => 'state-only', 'state' => 'test_state' })
+  #             allow(controller).to receive(:params).and_return({ 'filter-by'
+  #   => 'state-only', 'state' => 'test_state' })
   #             expect(Event).to receive(:where).with(county: @state.counties)
   #             controller.send(:filter_events)
   #         end
@@ -73,8 +73,8 @@ RSpec.describe EventsController, type: :controller do
   #         it 'calls County.find_by and Event.where with the correct arguments' do
   #             allow(controller).to receive(:params).and_return
   #   ({ 'filter-by' => 'other', 'state' => 'test_state', 'county' => 'test_county' })
-  #             expect(County).to receive(:find_by).with(state_id: @state.id, 
-#   fips_code: 'test_county').and_return(@county)
+  #             expect(County).to receive(:find_by).with(state_id: @state.id,
+  #   fips_code: 'test_county').and_return(@county)
   #             expect(Event).to receive(:where).with(county: @county)
   #             controller.send(:filter_events)
   #         end
