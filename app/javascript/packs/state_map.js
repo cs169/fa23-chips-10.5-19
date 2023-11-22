@@ -14,7 +14,15 @@ $(document).ready(() => {
             .attr('class', 'actionmap-view-region')
             .attr('d', mapAssets.path)
             .attr('data-county-name', (d) => stateMap.counties[d.properties.COUNTYFP].name)
-            .attr('data-county-fips-code', (d) => d.properties.COUNTYFP);
+            .attr('data-county-fips-code', (d) => d.properties.COUNTYFP)
+            .on('click', function(event, d) {
+                const countyName = stateMap.counties[d.properties.COUNTYFP].name;
+                // Extracting the state name dynamically from map.counties
+                const stateName = stateMap.counties[d.properties.COUNTYFP].state; // Adjust according to your data structure
+                const fullAddress = `${countyName}, ${stateName}`;
+                // Adjusting the URL format
+                window.location.href = `/search/${encodeURIComponent(fullAddress)}`;
+            });
 
         stateMapUtils.setupEventHandlers(stateMap);
     });
