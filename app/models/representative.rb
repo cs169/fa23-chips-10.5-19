@@ -12,7 +12,7 @@ class Representative < ApplicationRecord
       political_party_temp = official.party || ''
       photo_temp = official.photoUrl || ''
 
-      if official.addresses.present?
+      if official.address.present?
         address = official.address.first
         street_temp = address.line1
         city_temp = address.city
@@ -32,17 +32,17 @@ class Representative < ApplicationRecord
         end
       end
 
-      rep = { name: official.name, 
-        ocdid: ocdid_temp,
-        title: title_temp,
-        street: street_temp,
-        city: city_temp,
-        state: state_temp,
-        zip: zip_temp,
-        political_party: political_party_temp,
-        photo: photo_temp}
+      rep = { name:            official.name,
+              ocdid:           ocdid_temp,
+              title:           title_temp,
+              street:          street_temp,
+              city:            city_temp,
+              state:           state_temp,
+              zip:             zip_temp,
+              political_party: political_party_temp,
+              photo:           photo_temp }
 
-      #may need to search by more attributes
+      # may need to search by more attributes
       existing_rep = Representative.find_or_initialize_by(
         name:  official.name,
         ocdid: ocdid_temp,

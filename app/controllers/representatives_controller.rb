@@ -7,4 +7,5 @@ class RepresentativesController < ApplicationController
 
   def show
     @representative_show = Representative.find(params[:id])
+  end
 end
