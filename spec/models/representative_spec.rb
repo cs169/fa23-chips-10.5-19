@@ -26,10 +26,12 @@ describe Representative do
                           double('office', name: 'Existing Title', division_id: 'existing_ocdid', official_indices: [0])
                         ])
 
-      allow(described_class).to receive(:create!).with(hash_including(name: 'Existing Representative', ocdid: 'existing_ocdid',
-                                                                      title: 'Existing Title', street: '123 playground',
-                                                                      city: 'Berkeley', state: 'CA', zip: '94704',
-                                                                      political_party: 'Democrat', photo: 'aaaaa')).and_return(['new rep'])
+      allow(described_class).to receive(:create!).with(hash_including(name: 'Existing Representative',
+                                                                      ocdid: 'existing_ocdid', title: 'Existing Title',
+                                                                      street: '123 playground', city: 'Berkeley',
+                                                                      state: 'CA', zip: '94704',
+                                                                      political_party: 'Democrat',
+                                                                      photo: 'aaaaa')).and_return(['new rep'])
 
       reps = described_class.civic_api_to_representative_params(rep_info)
 
