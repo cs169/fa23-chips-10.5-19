@@ -18,9 +18,10 @@ $(document).ready(() => {
             .on('click', function(event, d) {
                 const countyName = stateMap.counties[d.properties.COUNTYFP].name;
                 // Extracting the state name dynamically from map.counties
-                const stateName = stateMap.counties[d.properties.COUNTYFP].state; // Adjust according to your data structure
+                const stateName = stateMap.counties[d.properties.COUNTYFP].state; 
                 const fullAddress = `${countyName}, ${stateName}`;
                 // Adjusting the URL format
+                alert(fullAddress)
                 window.location.href = `/search/${encodeURIComponent(fullAddress)}`;
             });
 
