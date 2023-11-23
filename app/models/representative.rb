@@ -39,7 +39,7 @@ class Representative < ApplicationRecord
       state:           address[2],
       zip:             address[3],
       political_party: official.party || '',
-      photo:           official.photoUrl || '' }
+      photo:           official.photo_url || '' }
   end
 
   def self.address_hash(official)
