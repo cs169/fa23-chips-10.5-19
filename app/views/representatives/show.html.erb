@@ -1,29 +1,30 @@
 <h1>Representative Profile Page</h1>
 
-<h2><%= @representative.name %></h2>
-<img src="<%= @representative.photo %>" alt="Picture of <%= @representative.name %>" />
+<h2><%= @representative_show.name %></h2>
+<img src="<%= @representative_show.photo %>" alt="Picture of <%= @representative_show.name %>" />
 
 <h2>Representative Information</h2>
 <h3>Title</h3>
-<p><%= @representative.title %></p>
+<p><%= @representative_show.title %></p>
 
 <h3>Open Civic Data ID</h3>
-<p><%= @representative.ocdid %></p>
+<p><%= @representative_show.ocdid %></p>
 
-<h3>Politcal Party</h3>
-<p><%= @representative.political_party %></p>
+<h3>Political Party</h3>
+<p><%= @representative_show.political_party %></p>
 
 <h2>Contact Information</h2>
-<address>
-<h3>Street</h3>
-<p><%= @representative.street %></p>
+<div>
+  <h3>Street</h3>
+  <p><%= @representative_show.street %></p>
 
-<h3>City</h3>
-<p><%= @representative.city %></p>
+  <h3>City</h3>
+  <p><%= @representative_show.city %></p>
 
-<h3>Zip Code</h3>
-<p><%= @representative.zip %></p>
+  <h3>Zip Code</h3>
+  <p><%= @representative_show.zip %></p>
 
-<h3>State</h3>
-<p><%= @representative.state %></p>
+  <h3>State</h3>
+  <p><%= @representative_show.state %></p>
+</div>
 <address>
