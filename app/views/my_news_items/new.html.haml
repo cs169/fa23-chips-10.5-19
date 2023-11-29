@@ -4,7 +4,7 @@
 
     .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
         = render 'form2', news_item: @news_item,
-        form_url: representative_search_items_path(@representative),
+        form_url: representative_search_items_path,
         form_method: :post,
         representatives_list: @representatives_list
     

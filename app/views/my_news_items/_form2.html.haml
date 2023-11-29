@@ -1,7 +1,7 @@
 = form_for news_item, url: form_url, html: { method: form_method } do |f|
     .form-group.row
         .col-sm-2
-            = label :news_item, :representative_id, class: 'col-form-label'
+            = label :news_item, 'Representative', class: 'col-form-label'
         .col-sm-10
             = select :news_item, :representative_id, representatives_list, { include_blank: true },
             class: 'form-control'
