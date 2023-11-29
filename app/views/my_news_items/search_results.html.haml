@@ -12,16 +12,25 @@
 
   .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
     %h3 Select an article:
-    - @top_five_articles&.each do |article|
-      %h4= article.title
-      %p
-        %strong Link:
-        = link_to article.link, article.link
-      %p
-        %strong Description:
-        = article.description
-      %hr
-
+    - if @articles.present?
+      %table
+        %thead
+          %tr
+            %th Title
+            %th Link
+            %th Author
+            %th Choose
+        %tbody
+          - @articles.each_with_index do |article, index|
+            %tr
+              %td= article['title']
+              %td= link_to article['url'], article['url'], target: '_blank'
+              %td= article['author']
+              %td
+                %input{ type: 'radio', name: 'selected_article', value: index }
+    - else
+      %tr
+        %td{ colspan: 4, class: 'text-center' } No articles found
 
   .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
     .clearfix.mt-3
