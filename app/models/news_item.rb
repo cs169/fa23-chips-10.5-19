@@ -3,13 +3,13 @@
 class NewsItem < ApplicationRecord
   belongs_to :representative
   has_many :ratings, dependent: :delete_all
-  issues_list = ["Free Speech", "Immigration", "Terrorism", "Social Security and
+  ISSUES_LIST = ["Free Speech", "Immigration", "Terrorism", "Social Security and
   Medicare", "Abortion", "Student Loans", "Gun Control", "Unemployment",
   "Climate Change", "Homelessness", "Racism", "Tax Reform", "Net
   Neutrality", "Religious Freedom", "Border Security", "Minimum Wage",
   "Equal Pay"]
 
-  validates :issue, presence: true, inclusion: {in: issues_list}
+  validates :issue, presence: true, inclusion: {in: ISSUES_LIST}
 
   def self.find_for(representative_id)
     NewsItem.find_by(
@@ -18,6 +18,6 @@ class NewsItem < ApplicationRecord
   end
 
   def self.get_issues
-    issues_list
+    ISSUES_LIST
   end
 end
