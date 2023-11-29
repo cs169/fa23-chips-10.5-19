@@ -1,0 +1,23 @@
+.container-fluid
+  .row
+    .col-md-8.offset-md-2
+      .table-responsive-md.pt-5
+        %table.table.table-striped.table-hover#events
+          %caption Table of Representatives
+          %thead.thead-dark
+            %tr
+              %th Name
+              %th Office
+              %th Links
+          %tbody
+            - if @articles.present?
+              - @articles.each_with_index do |article, index|
+                %tr
+                  %td= article['title']
+                  %td= article['description']
+                  %td= article['author']
+                  %td
+                    %input{ type: 'radio', name: 'selected_article', value: index }
+            - else
+              %tr
+                %td{ colspan: 4, class: 'text-center' } No articles found

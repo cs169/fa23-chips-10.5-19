@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+require 'net/http'
+require 'uri'
+require 'json'
 
 class MyNewsItemsController < SessionController
   before_action :set_representative
@@ -36,6 +39,13 @@ class MyNewsItemsController < SessionController
                 notice: 'News was successfully destroyed.'
   end
 
+  def search
+    query = params[:query]
+    @articles = news_api_request('gaza').first(5)
+
+
+  end
+
   private
 
   def set_representative
@@ -55,5 +65,35 @@ class MyNewsItemsController < SessionController
   # Only allow a list of trusted parameters through.
   def news_item_params
     params.require(:news_item).permit(:news, :title, :description, :link, :representative_id)
+  end
+
+
+
+
+
+  #Google News API request
+  def news_api_request(query)
+    base_url = 'https://newsapi.org/v2/everything'
+    puts '-----------------'
+    query_params = {
+      q: query,
+      sortBy: 'popularity',
+      apiKey: Rails.application.credentials[:NEWS_API_KEY]
+    }
+
+    api_url = URI.parse("#{base_url}?#{URI.encode_www_form(query_params)}")
+
+    http = Net::HTTP.new(api_url.host, api_url.port)
+    http.use_ssl = true 
+    request = Net::HTTP::Get.new(api_url.request_uri)
+
+    response = http.request(request)
+
+    if response.code.to_i == 200
+      return JSON.parse(response.body)['articles']
+    else
+      puts "Error: #{response.code} - #{response.message}"
+      return nil
+    end
   end
 end
