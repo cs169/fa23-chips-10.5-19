@@ -16,7 +16,7 @@ class MyNewsItemsController < SessionController
     @selected_issue = params[:news_item][:issue]
 
     #placeholder for 2.3 
-    @top_five_articles
+    @top_five_articles = []
 
     render 'search_results'
   end

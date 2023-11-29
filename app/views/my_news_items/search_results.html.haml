@@ -12,8 +12,7 @@
 
   .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
     %h3 Select an article:
-    - @top_articles.each do |article|
-    # placeholder for 2.3 (add radio button, etc)
+    - @top_five_articles&.each do |article|
       %h4= article.title
       %p
         %strong Link:
@@ -23,15 +22,10 @@
         = article.description
       %hr
 
-  # placeholder for 2.4 (add rating box, save functionality) 
-
-  .actions
-        = f.submit 'Save', class: 'btn btn-primary'
-
 
   .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
-        .clearfix.mt-3
-            .float-right
-                = link_to representative_news_items_path(@representative), class: 'btn btn-info' do
-                    View news articles
-                    %i.fas.fa-arrow-right
+    .clearfix.mt-3
+      .float-right
+        = link_to representative_news_items_path(@representative), class: 'btn btn-info' do
+          View news articles
+          %i.fas.fa-arrow-right
