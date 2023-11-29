@@ -14,7 +14,7 @@ class MyNewsItemsController < SessionController
   def search_news_items
     @representative = Representative.find(params[:representative_id])
     @selected_issue = params[:news_item][:issue]
-    @articles = news_api_request(@representative.name + " " + @selected_issue).first(5)
+    @articles = news_api_request("#{@representative.name} #{@selected_issue}").first(5)
     render 'search_results'
   end
 
@@ -64,12 +64,12 @@ class MyNewsItemsController < SessionController
     params.require(:news_item).permit(:news, :title, :description, :link, :representative_id, :issue)
   end
 
-  #make the api request
+  # make the api request
   def news_api_request(query)
     base_url = 'https://newsapi.org/v2/everything'
-    puts '-----------------'
+    Rails.logger.debug '-----------------'
     query_params = {
-      q: query,
+      q:      query,
       sortBy: 'relevancy',
       apiKey: Rails.application.credentials[:NEWS_API_KEY]
     }
@@ -77,17 +77,16 @@ class MyNewsItemsController < SessionController
     api_url = URI.parse("#{base_url}?#{URI.encode_www_form(query_params)}")
 
     http = Net::HTTP.new(api_url.host, api_url.port)
-    http.use_ssl = true 
+    http.use_ssl = true
     request = Net::HTTP::Get.new(api_url.request_uri)
 
     response = http.request(request)
 
     if response.code.to_i == 200
-      return JSON.parse(response.body)['articles']
+      JSON.parse(response.body)['articles']
     else
-      puts "Error: #{response.code} - #{response.message}"
-      return nil
+      Rails.logger.debug { "Error: #{response.code} - #{response.message}" }
+      nil
     end
   end
 end
-
