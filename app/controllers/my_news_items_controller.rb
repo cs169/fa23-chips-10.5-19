@@ -15,7 +15,7 @@ class MyNewsItemsController < SessionController
     @representative = Representative.find(params[:news_item][:representative_id])
     @selected_issue = params[:news_item][:issue]
 
-    #placeholder for 2.3 
+    # placeholder for 2.3
     @top_five_articles = []
 
     render 'search_results'
