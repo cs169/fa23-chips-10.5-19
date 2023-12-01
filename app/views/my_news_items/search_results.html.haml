@@ -13,32 +13,29 @@
   .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
     %h3 Select an article:
     - if @articles.present?
-      %table
-        %thead
-          %tr
-            %th Title
-            %th Link
-            %th Author
-            %th Choose
-        %tbody
-          - @articles.each_with_index do |article, index|
+      %form{ action: "/representatives/#{@representative[:id]}/my_news_item/save_article", method: 'post' }
+        = hidden_field_tag :authenticity_token, form_authenticity_token
+        %table
+          %thead
             %tr
-              %td= article['title']
-              %td= link_to article['url'], article['url'], target: '_blank'
-              %td= article['author']
-              %td
-                %input{ type: 'radio', name: 'selected_article', value: index }
+              %th Title
+              %th Link
+              %th Author
+              %th Choose
+          %tbody
+            - @articles.each_with_index do |article, index|
+              %tr
+                %td= article['title']
+                %td= link_to article['url'], article['url'], target: '_blank'
+                %td= article['author']
+                %td
+                  %input{ type: 'radio', name: 'selected_article', value: article['url'] }
+        %p{ style: "display: inline; margin-right: 10px;" } Rating:
+        %select{style: "display: inline;", name: 'article_rating'}
+          - (1..5).each do |rating|
+            %option{ value: rating }= rating
+        %input{ type: 'submit', value: 'Save', class: 'btn btn-primary mb-3' }
     - else
-      %tr
-        %td{ colspan: 4, class: 'text-center' } No articles found
+      %p No articles found
 
-  .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
-    %p{ style: "display: inline; margin-right: 10px;" } Rating:
-    %select{style: "display: inline;", name: 'article_rating'}
-      - (1..5).each do |rating|
-        %option{ value: rating }
-          = rating
-    %form{ action: "/representatives/#{@representative[:id]}/my_news_item/save_article", method: 'post' }
-      = hidden_field_tag :authenticity_token, form_authenticity_token
-      %input{ type: 'submit', value: 'Save', class: 'btn btn-primary mb-3' }
     = link_to 'View news articles', representative_news_items_path(@representative), class: 'btn btn-info'

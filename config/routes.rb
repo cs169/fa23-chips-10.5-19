@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   root to: 'map#index', as: 'root'
   get '/state/:state_symbol' => 'map#state', :as => :state_map
-  get '/state/:state_symbol/county/:std_fips_code' => 'map#county', as: :county
+  get '/state/:state_symbol/county/:std_fips_code' => 'map#county', :as => :county
 
   get '/ajax/state/:state_symbol' => 'ajax#counties'
 
@@ -27,24 +27,22 @@ Rails.application.routes.draw do
   # Routes for Representatives
   resources :representatives, only: [:index]
   resources :representatives do
-    resources :news_items, only: %i[index show]
-    get '/representatives/:representative_id/my_news_item/new' => 'my_news_items#new',
-        :as => :new_my_news_item
+      resources :news_items, only: %i[index show]
+      get '/representatives/:representative_id/my_news_item/new' => 'my_news_items#new',
+          :as                                                    => :new_my_news_item
 
-    post '/representatives/:representative_id/my_news_item/search_news_items' => 'my_news_items#search_news_items',
-        :as => :search_items 
-
-    match '/representatives/:representative_id/my_news_item/new', to: 'my_news_items#create',
-                                                                  via: [:post]
-    get '/representatives/:representative_id/my_news_item/:id' => 'my_news_items#edit',
-        :as => :edit_my_news_item
-    match '/representatives/:representative_id/my_news_item/:id', to: 'my_news_items#update',
-                                                                  via: %i[put patch]
-    match '/representatives/:representative_id/my_news_item/:id', to: 'my_news_items#destroy',
-                                                                  via: [:delete]
-    
-    post '/representatives/:representative_id/my_news_item/save_article' => 'my_news_items#save_article', as: :save_article
+      post '/representatives/:representative_id/my_news_item/search_news_items' => 'my_news_items#search_news_items',
+          :as                                                    => :search_items 
+      post '/my_news_item/save_article' => 'my_news_items#save_article',
+          :as                                                    => :save_article 
+      match '/representatives/:representative_id/my_news_item/new', to:  'my_news_items#create',
+                                                                    via: [:post]
+      get '/representatives/:representative_id/my_news_item/:id' => 'my_news_items#edit',
+          :as                                                    => :edit_my_news_item
+      match '/representatives/:representative_id/my_news_item/:id', to:  'my_news_items#update',
+                                                                    via: %i[put patch]
+      match '/representatives/:representative_id/my_news_item/:id', to:  'my_news_items#destroy',
+                                                                    via: [:delete]
   end
-
   get '/search/(:address)' => 'search#search', :as => 'search_representatives'
 end

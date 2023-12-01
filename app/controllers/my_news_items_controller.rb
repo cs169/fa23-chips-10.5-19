@@ -44,14 +44,25 @@ class MyNewsItemsController < SessionController
   end
 
   def save_article
-    selected_article_index = params[:selected_article].to_i
-    article_rating = params[:article_rating][selected_article_index]
-
-    # Placeholder
-    flash[:notice] = "Saved article \#{selected_article_index} with rating \#{article_rating}."
-    redirect_to root_path
+    news_item = NewsItem.find_by(id: params[:selected_article])
+    #flash[:notice] = "Saved article '#{params[:selected_article]}'"
+    if news_item
+      rating = news_item.ratings.create(
+        score: params[:article_rating],
+        representative: @representative
+      )
+      if rating.persisted?
+        flash[:notice] = "Saved article '#{news_item.title}' with rating #{rating.score}."
+      else
+        flash[:alert] = "Failed to save rating."
+      end
+    else
+      flash[:alert] = "Article not found."
+    end
+  
+    redirect_to representative_news_items_path(@representative)
   end
-
+  
   private
 
   def set_representative
