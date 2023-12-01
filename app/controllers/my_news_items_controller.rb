@@ -47,16 +47,14 @@ class MyNewsItemsController < SessionController
   def save_article
     article_data = JSON.parse(params[:selected_article])
   
-    # Handle potential parse errors for publishedAt
     published_at = if article_data['publishedAt'].present?
                      DateTime.parse(article_data['publishedAt']) rescue DateTime.current
                    else
                      DateTime.current
                    end
   
-    # Convert rating to an integer
     rating = params[:news_item][:rating].to_i
-  
+
     @news_item = NewsItem.new(
       title: article_data['title'],
       link: article_data['url'], 
@@ -64,8 +62,8 @@ class MyNewsItemsController < SessionController
       rating: rating,
       representative_id: @representative.id,
       created_at: published_at,
-      updated_at: published_at,
-      issue: params[:news_item][:issue] # Get the issue from the form
+      updated_at: DateTime.current,
+      issue: params[:news_item][:issue] 
     )
   
     if @news_item.save
@@ -104,8 +102,7 @@ class MyNewsItemsController < SessionController
     query_params = {
       q:      query,
       sortBy: 'relevancy',
-      apiKey: "ff48d2ce0dbc4d5d9ecdc05c214a9df9"
-      #Rails.application.credentials[:NEWS_API_KEY]
+      apiKey: Rails.application.credentials[:NEWS_API_KEY]
     }
 
     api_url = URI.parse("#{base_url}?#{URI.encode_www_form(query_params)}")
