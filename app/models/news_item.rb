@@ -10,8 +10,7 @@ class NewsItem < ApplicationRecord
                  'Tax Reform', 'Net Neutrality', 'Religious Freedom',
                  'Border Security', 'Minimum Wage', 'Equal Pay'].freeze
 
-
-  validates :issue, presence: true, inclusion: { in: ISSUES_LIST }
+  validates :issue, presence: true, inclusion: {in: ISSUES_LIST}
 
   def self.find_for(representative_id)
     NewsItem.find_by(

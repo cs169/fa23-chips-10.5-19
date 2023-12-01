@@ -151,3 +151,7 @@ RSpec/EmptyExampleGroup:
 
 RSpec/MessageSpies:
     Enabled: false
+
+RSpec/AnyInstance:
+  Exclude:
+    - 'spec/controllers/my_news_items_controller_spec.rb'

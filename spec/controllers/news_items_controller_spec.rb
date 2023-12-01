@@ -5,18 +5,17 @@
 # RSpec.describe NewsItemsController, type: :controller do
 #   describe 'GET #index' do
 #     before do
-#       @representative = Representative.create(name: 'John Doe')
-#       @news_item1 = NewsItem.create(title: 'News Item 1', representative: @representative, link: 'https://example.com/news1')
-#       @news_item2 = NewsItem.create(title: 'News Item 2', representative: @representative, link: 'https://example.com/news2')
+#       # Create test data before triggering the action
+#       @representative = Representative.create(name: 'John Doe')  # Adjust attributes as needed
+#       @news_item1 = NewsItem.create(title: 'News Item 1', link: 'https://example.com/news1', representative: @representative)
+#       @news_item2 = NewsItem.create(title: 'News Item 2', link: 'https://example.com/news2', representative: @representative)
+#       # Ensure the representative is signed in if you have authentication
+#       # sign_in @representative
 #     end
 
-#     it 'assigns all news items for the representative to @news_items' do
+#     it 'assigns @news_items' do
 #       get :index, params: { representative_id: @representative.id }
 #       expect(assigns(:news_items)).to eq([@news_item1, @news_item2])
 #     end
 #   end
-<<<<<<< HEAD
 # end
-=======
-# end
->>>>>>> 1bfbe3340e51bf431b7f8d101d1c9e24f0409b3f
