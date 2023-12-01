@@ -1,15 +1,16 @@
 .row.mt-2
-  .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
-    %h1.text-center Edit News Item
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        %h1.text-center Edit News Item
 
-  .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
-    %p
-      %strong Representative:
-      = link_to @representative.name, representative_path(@representative)
-    %p
-      %strong Issue:
-      = @selected_issue
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        %p
+            %strong Representative:
+            = link_to @representative.name, representative_path(@representative)
+        %p
+            %strong Issue:
+            = @selected_issue
 
+<<<<<<< HEAD
   .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
     %h3 Select an article:
     - if @articles.present?
@@ -38,3 +39,4 @@
         = link_to representative_news_items_path(@representative), class: 'btn btn-info' do
           View news articles
           %i.fas.fa-arrow-right
+

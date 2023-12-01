@@ -87,6 +87,9 @@ Metrics/BlockLength:
         - namespace
         - ActiveRecord::Schema.define
 
+Naming/AccessorMethodName:
+    Enabled: false
+
 # Skips style of child classes and modules.
 Style/ClassAndModuleChildren:
     Enabled: false

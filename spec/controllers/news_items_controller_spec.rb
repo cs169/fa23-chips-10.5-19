@@ -15,4 +15,8 @@
 #       expect(assigns(:news_items)).to eq([@news_item1, @news_item2])
 #     end
 #   end
+<<<<<<< HEAD
 # end
+=======
+# end
+>>>>>>> 1bfbe3340e51bf431b7f8d101d1c9e24f0409b3f
