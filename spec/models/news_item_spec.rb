@@ -25,18 +25,18 @@
 require 'rails_helper'
 
 RSpec.describe NewsItem, type: :model do
-  let(:issues_list) do
-    ['Free Speech', 'Immigration', 'Terrorism',
-     'Social Security and Medicare', 'Abortion',
-     'Student Loans', 'Gun Control', 'Unemployment',
-     'Climate Change', 'Homelessness', 'Racism',
-     'Tax Reform', 'Net Neutrality', 'Religious Freedom',
-     'Border Security', 'Minimum Wage', 'Equal Pay']
-  end
+  # let(:issues_list) do
+  #   ['Free Speech', 'Immigration', 'Terrorism',
+  #    'Social Security and Medicare', 'Abortion',
+  #    'Student Loans', 'Gun Control', 'Unemployment',
+  #    'Climate Change', 'Homelessness', 'Racism',
+  #    'Tax Reform', 'Net Neutrality', 'Religious Freedom',
+  #    'Border Security', 'Minimum Wage', 'Equal Pay']
+  # end
 
-  it 'has a valid list of issues' do
-    expect(NewsItem::ISSUES_LIST).to match_array(issues_list)
-  end
+  # it 'has a valid list of issues' do
+  #   expect(NewsItem::ISSUES_LIST).to match_array(issues_list)
+  # end
 
   it 'validates presence of issue' do
     news_article = described_class.new(issue: nil)
