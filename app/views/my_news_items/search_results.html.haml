@@ -13,9 +13,12 @@
   .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
     %h3 Select an article:
     - if @articles.present?
-      %form{ action: "/representatives/#{@representative[:id]}/my_news_item/save_article", method: 'post' }
+      %form{ action: "/representatives/#{@representative.id}/my_news_item/save_article", method: "post" }
         = hidden_field_tag :authenticity_token, form_authenticity_token
-        %table
+        = hidden_field_tag 'selected_article', '', id: 'selected_article'
+        = hidden_field_tag 'news_item[issue]', @selected_issue
+
+        %table.table
           %thead
             %tr
               %th Title
@@ -29,13 +32,21 @@
                 %td= link_to article['url'], article['url'], target: '_blank'
                 %td= article['author']
                 %td
-                  %input{ type: 'radio', name: 'selected_article', value: article['url'] }
-        %p{ style: "display: inline; margin-right: 10px;" } Rating:
-        %select{style: "display: inline;", name: 'article_rating'}
+                  %input{ type: 'radio', name: 'article_radio', id: "article_#{index}", onclick: "setArticle(#{article.to_json})" }
+
+        %p Rating:
+        %select{name: 'news_item[rating]'}
           - (1..5).each do |rating|
             %option{ value: rating }= rating
+
         %input{ type: 'submit', value: 'Save', class: 'btn btn-primary mb-3' }
+
     - else
       %p No articles found
 
     = link_to 'View news articles', representative_news_items_path(@representative), class: 'btn btn-info'
+
+:javascript
+  function setArticle(article) {
+    document.getElementById('selected_article').value = JSON.stringify(article);
+  }

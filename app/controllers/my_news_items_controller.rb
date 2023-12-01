@@ -43,25 +43,41 @@ class MyNewsItemsController < SessionController
                 notice: 'News was successfully destroyed.'
   end
 
+
   def save_article
-    news_item = NewsItem.find_by(id: params[:selected_article])
-    #flash[:notice] = "Saved article '#{params[:selected_article]}'"
-    if news_item
-      rating = news_item.ratings.create(
-        score: params[:article_rating],
-        representative: @representative
-      )
-      if rating.persisted?
-        flash[:notice] = "Saved article '#{news_item.title}' with rating #{rating.score}."
-      else
-        flash[:alert] = "Failed to save rating."
-      end
-    else
-      flash[:alert] = "Article not found."
-    end
+    article_data = JSON.parse(params[:selected_article])
   
-    redirect_to representative_news_items_path(@representative)
+    # Handle potential parse errors for publishedAt
+    published_at = if article_data['publishedAt'].present?
+                     DateTime.parse(article_data['publishedAt']) rescue DateTime.current
+                   else
+                     DateTime.current
+                   end
+  
+    # Convert rating to an integer
+    rating = params[:news_item][:rating].to_i
+  
+    @news_item = NewsItem.new(
+      title: article_data['title'],
+      link: article_data['url'], 
+      description: article_data['description'], 
+      rating: rating,
+      representative_id: @representative.id,
+      created_at: published_at,
+      updated_at: published_at,
+      issue: params[:news_item][:issue] # Get the issue from the form
+    )
+  
+    if @news_item.save
+      flash[:notice] = 'Article was successfully saved.'
+      redirect_to representative_news_items_path(@representative)
+    else
+      flash[:alert] = 'Error saving article: ' + @news_item.errors.full_messages.join(', ')
+      redirect_to representative_news_items_path(@representative)
+    end
   end
+  
+  
   
   private
 

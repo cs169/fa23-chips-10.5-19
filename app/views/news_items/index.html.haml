@@ -35,12 +35,7 @@
                 %td= item.description
                 %td
                   %time.timeago{ datetime: item.created_at.iso8601 }
-                %td
-                  - average_rating = item.ratings.average(:score)
-                  - if average_rating.present?
-                    = 'Average Rating: ' + average_rating.round(1).to_s
-                  - else
-                    %span No ratings yet
+                %td= item.rating || 'Not rated'
                 %td
                   = link_to representative_news_item_path(item.representative.id, item.id), class: 'btn btn-info' do
                     %i.fas.fa-eye &nbsp;Info
