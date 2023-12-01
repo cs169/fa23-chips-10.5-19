@@ -43,12 +43,19 @@ class MyNewsItemsController < SessionController
                 notice: 'News was successfully destroyed.'
   end
 
+  def save_article
+    selected_article_index = params[:selected_article].to_i
+    article_rating = params[:article_rating][selected_article_index]
+
+    # Placeholder
+    flash[:notice] = "Saved article \#{selected_article_index} with rating \#{article_rating}."
+    redirect_to root_path
+  end
+
   private
 
   def set_representative
-    @representative = Representative.find(
-      params[:representative_id]
-    )
+    @representative = Representative.find(params[:representative_id])
   end
 
   def set_representatives_list
@@ -59,9 +66,8 @@ class MyNewsItemsController < SessionController
     @news_item = NewsItem.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def news_item_params
-    params.require(:news_item).permit(:news, :title, :description, :link, :representative_id, :issue)
+    params.require(:news_item).permit(:news, :title, :description, :link, :representative_id, :issue, :selected_article, :article_rating)
   end
 
   # make the api request
@@ -71,7 +77,8 @@ class MyNewsItemsController < SessionController
     query_params = {
       q:      query,
       sortBy: 'relevancy',
-      apiKey: Rails.application.credentials[:NEWS_API_KEY]
+      apiKey: "ff48d2ce0dbc4d5d9ecdc05c214a9df9"
+      #Rails.application.credentials[:NEWS_API_KEY]
     }
 
     api_url = URI.parse("#{base_url}?#{URI.encode_www_form(query_params)}")
