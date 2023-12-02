@@ -14,10 +14,7 @@ class MyNewsItemsController < SessionController
   def search_news_items
     @representative = Representative.find(params[:news_item][:representative_id])
     @selected_issue = params[:news_item][:issue]
-
-    # placeholder for 2.3
-    @top_five_articles = []
-
+    @articles = news_api_request("#{@representative.name} #{@selected_issue}").first(5)
     render 'search_results'
   end
 
@@ -65,5 +62,31 @@ class MyNewsItemsController < SessionController
   # Only allow a list of trusted parameters through.
   def news_item_params
     params.require(:news_item).permit(:news, :title, :description, :link, :representative_id, :issue)
+  end
+
+  # make the api request
+  def news_api_request(query)
+    base_url = 'https://newsapi.org/v2/everything'
+    Rails.logger.debug '-----------------'
+    query_params = {
+      q:      query,
+      sortBy: 'relevancy',
+      apiKey: Rails.application.credentials[:NEWS_API_KEY]
+    }
+
+    api_url = URI.parse("#{base_url}?#{URI.encode_www_form(query_params)}")
+
+    http = Net::HTTP.new(api_url.host, api_url.port)
+    http.use_ssl = true
+    request = Net::HTTP::Get.new(api_url.request_uri)
+
+    response = http.request(request)
+
+    if response.code.to_i == 200
+      JSON.parse(response.body)['articles']
+    else
+      Rails.logger.debug { "Error: #{response.code} - #{response.message}" }
+      nil
+    end
   end
 end
