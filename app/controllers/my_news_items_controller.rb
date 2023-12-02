@@ -11,6 +11,16 @@ class MyNewsItemsController < SessionController
 
   def edit; end
 
+  def search_news_items
+    @representative = Representative.find(params[:news_item][:representative_id])
+    @selected_issue = params[:news_item][:issue]
+
+    # placeholder for 2.3
+    @top_five_articles = []
+
+    render 'search_results'
+  end
+
   def create
     @news_item = NewsItem.new(news_item_params)
     if @news_item.save

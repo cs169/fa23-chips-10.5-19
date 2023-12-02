@@ -3,6 +3,7 @@
 class NewsItem < ApplicationRecord
   belongs_to :representative
   has_many :ratings, dependent: :delete_all
+
   ISSUES_LIST = ['Free Speech', 'Immigration', 'Terrorism',
                  'Social Security and Medicare', 'Abortion',
                  'Student Loans', 'Gun Control', 'Unemployment',
