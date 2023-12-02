@@ -10,33 +10,31 @@
             %strong Issue:
             = @selected_issue
 
-<<<<<<< HEAD
-  .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
-    %h3 Select an article:
-    - if @articles.present?
-      %table
-        %thead
-          %tr
-            %th Title
-            %th Link
-            %th Author
-            %th Choose
-        %tbody
-          - @articles.each_with_index do |article, index|
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        %h3 Select an article:
+        - if @articles.present?
+            %table
+                %thead
+                    %tr
+                        %th Title
+                        %th Link
+                        %th Author
+                        %th Choose
+                %tbody
+                    - @articles.each_with_index do |article, index|
+                        %tr
+                            %td= article['title']
+                            %td= link_to article['url'], article['url'], target: '_blank', rel: 'noopener'
+                            %td= article['author']
+                            %td
+                                %input{ type: 'radio', name: 'selected_article', value: index }
+        - else
             %tr
-              %td= article['title']
-              %td= link_to article['url'], article['url'], target: '_blank'
-              %td= article['author']
-              %td
-                %input{ type: 'radio', name: 'selected_article', value: index }
-    - else
-      %tr
-        %td{ colspan: 4, class: 'text-center' } No articles found
+                %td.text-center{ colspan: 4 } No articles found
 
-  .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
-    .clearfix.mt-3
-      .float-right
-        = link_to representative_news_items_path(@representative), class: 'btn btn-info' do
-          View news articles
-          %i.fas.fa-arrow-right
-
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        .clearfix.mt-3
+            .float-right
+                = link_to representative_path(@representative), rel: 'noopener', class: 'btn btn-info' do
+                    View news articles
+                    %i.fas.fa-arrow-right
