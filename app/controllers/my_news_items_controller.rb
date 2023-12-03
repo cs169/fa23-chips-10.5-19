@@ -48,41 +48,16 @@ class MyNewsItemsController < SessionController
 
   def save_article
     article_data = JSON.parse(params[:selected_article])
-  
-    published_at = if article_data['publishedAt'].present?
-                     DateTime.parse(article_data['publishedAt']) rescue DateTime.current
-                   else
-                     DateTime.current
-                   end
-  
     rating = params[:news_item][:rating].to_i
-
-    @news_item = NewsItem.new(
-      title: article_data['title'],
-      link: article_data['url'], 
-      description: article_data['description'], 
-      rating: rating,
-      representative_id: @representative.id,
-      created_at: published_at,
-      updated_at: DateTime.current,
-      issue: params[:news_item][:issue] 
-    )
-  
-    if @news_item.save
-      flash[:notice] = 'Article was successfully saved.'
-      redirect_to representative_news_items_path(@representative)
-    else
-      flash[:alert] = 'Error saving article: ' + @news_item.errors.full_messages.join(', ')
-      redirect_to representative_news_items_path(@representative)
-    end
+    issue = params[:news_item][:issue]
+    @news_item = build_news_item(article_data, rating, issue)
+    save_news_item_and_redirect(@news_item)
   end
 
   private
 
   def set_representative
-    @representative = Representative.find(
-      params[:representative_id]
-    )
+    @representative = Representative.find(params[:representative_id])
   end
 
   def set_representatives_list
@@ -93,12 +68,10 @@ class MyNewsItemsController < SessionController
     @news_item = NewsItem.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def news_item_params
     params.require(:news_item).permit(:news, :title, :description, :link, :representative_id, :issue)
   end
 
-  # make the api request
   def news_api_request(query)
     base_url = 'https://newsapi.org/v2/everything'
     Rails.logger.debug '-----------------'
@@ -122,5 +95,29 @@ class MyNewsItemsController < SessionController
       Rails.logger.debug { "Error: #{response.code} - #{response.message}" }
       nil
     end
+  end
+
+  def build_news_item(article_data, rating, issue)
+    published_at = DateTime.current
+    published_at = DateTime.parse(article_data['publishedAt']) if article_data['publishedAt'].present?
+    NewsItem.new(
+      title:             article_data['title'],
+      link:              article_data['url'],
+      description:       article_data['description'],
+      rating:            rating,
+      representative_id: @representative.id,
+      created_at:        published_at,
+      updated_at:        DateTime.current,
+      issue:             issue
+    )
+  end
+
+  def save_news_item_and_redirect(news_item)
+    if news_item.save
+      flash[:notice] = 'Article was successfully saved.'
+    else
+      flash[:alert] = "Error saving article: #{news_item.errors.full_messages.join(', ')}"
+    end
+    redirect_to representative_news_items_path(@representative)
   end
 end
