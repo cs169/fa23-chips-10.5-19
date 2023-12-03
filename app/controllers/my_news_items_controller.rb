@@ -12,7 +12,7 @@ class MyNewsItemsController < SessionController
   def edit; end
 
   def search_news_items
-    @representative = Representative.find(params[:representative_id])
+    @representative = Representative.find(params[:news_item][:representative_id])
     @selected_issue = params[:news_item][:issue]
     @articles = news_api_request("#{@representative.name} #{@selected_issue}").first(5)
     render 'search_results'

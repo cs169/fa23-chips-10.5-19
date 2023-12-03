@@ -87,6 +87,9 @@ Metrics/BlockLength:
         - namespace
         - ActiveRecord::Schema.define
 
+Naming/AccessorMethodName:
+    Enabled: false
+
 # Skips style of child classes and modules.
 Style/ClassAndModuleChildren:
     Enabled: false
@@ -148,3 +151,7 @@ RSpec/EmptyExampleGroup:
 
 RSpec/MessageSpies:
     Enabled: false
+
+RSpec/AnyInstance:
+  Exclude:
+    - 'spec/controllers/my_news_items_controller_spec.rb'
