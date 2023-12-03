@@ -10,7 +10,7 @@ class MyNewsItemsController < SessionController
     @issues = NewsItem.get_issues
   end
 
-  def edit 
+  def edit
     @issues = NewsItem.get_issues
   end
 
