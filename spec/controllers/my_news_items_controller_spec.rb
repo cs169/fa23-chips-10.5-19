@@ -44,4 +44,29 @@ RSpec.describe MyNewsItemsController, type: :controller do
       end
     end
   end
+
+  describe '#save_article' do
+    let(:representative) { Representative.create! }
+    let(:article_data) do
+      {
+        'title'       => 'Test Title',
+        'url'         => 'http://example.com',
+        'description' => 'Test Description',
+        'publishedAt' => '2023-01-01T00:00:00Z'
+      }
+    end
+    let(:params) do
+      {
+        selected_article: article_data.to_json,
+        news_item:        { rating: 5, issue: 'Test Issue' }
+      }
+    end
+
+    it 'saves a new news item from an article' do
+      expect do
+        post "/representatives/#{representative.id}/my_news_item/save_article", params: params
+      end.to change(NewsItem, :count).by(1)
+      expect(response).to redirect_to representative_news_items_path(representative)
+    end
+  end
 end
