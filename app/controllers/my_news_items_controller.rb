@@ -43,7 +43,6 @@ class MyNewsItemsController < SessionController
                 notice: 'News was successfully destroyed.'
   end
 
-
   def save_article
     article_data = JSON.parse(params[:selected_article])
   
@@ -74,13 +73,13 @@ class MyNewsItemsController < SessionController
       redirect_to representative_news_items_path(@representative)
     end
   end
-  
-  
-  
+
   private
 
   def set_representative
-    @representative = Representative.find(params[:representative_id])
+    @representative = Representative.find(
+      params[:representative_id]
+    )
   end
 
   def set_representatives_list
@@ -91,8 +90,9 @@ class MyNewsItemsController < SessionController
     @news_item = NewsItem.find(params[:id])
   end
 
+  # Only allow a list of trusted parameters through.
   def news_item_params
-    params.require(:news_item).permit(:news, :title, :description, :link, :representative_id, :issue, :selected_article, :article_rating)
+    params.require(:news_item).permit(:news, :title, :description, :link, :representative_id, :issue)
   end
 
   # make the api request
