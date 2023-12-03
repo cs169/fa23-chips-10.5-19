@@ -7,9 +7,12 @@ class MyNewsItemsController < SessionController
 
   def new
     @news_item = NewsItem.new
+    @issues = NewsItem.get_issues
   end
 
-  def edit; end
+  def edit 
+    @issues = NewsItem.get_issues
+  end
 
   def search_news_items
     @representative = Representative.find(params[:news_item][:representative_id])
